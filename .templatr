@@ -1,0 +1,13 @@
+{
+  "name": "Quest Mod Template",
+  "author": "Lauriethefish",
+  "src": "./template",
+  "description": "Template for creating QuestPatcher/BMBF mods for the Oculus Quest.",
+  "placeholders": [
+    {"match": "C:/Program Files/Qmod/Android", "prompt": "The path to the android NDK", "cachable": true},
+    {"match": "QustomText", "prompt": "The ID of the mod"},
+    {"match": "Qustom Text", "prompt": "The name of the mod"},
+    {"match": "Nuggo", "prompt": "The author of the mod"},
+    {"match": "Allows user to change text on each of the main menu buttons, fail screen text and completion screen text", "prompt": "The description of the mod"}
+  ]
+}
