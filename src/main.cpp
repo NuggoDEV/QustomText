@@ -1,5 +1,13 @@
 #include "main.hpp"
 
+#include "UI/QustomTextUI.hpp"
+using namespace QustomText;
+
+#include "Questui/shared/QuestUI.hpp"
+
+#include "QustomTextConfig.hpp"
+DEFINE_CONFIG(QustomTextConfig);
+
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
 // Loads the config from disk using our modInfo, then returns it for use
@@ -28,6 +36,10 @@ extern "C" void setup(ModInfo& info) {
 // Called later on in the game loading - a good time to install function hooks
 extern "C" void load() {
     il2cpp_functions::Init();
+
+    getQustomTextConfig().Init(modInfo);
+    QuestUI::Init();
+    QuestUI::Register::RegisterMainMenuModSettingsViewController<QustomTextUI *>(modInfo, "Qustom Text");
 
     getLogger().info("Installing hooks...");
     // Install our hooks (none defined yet)
