@@ -29,34 +29,37 @@ void QustomTextUI::DidActivate(bool firstActivation, bool addedToHierarchy, bool
 
     if (firstActivation) {
         centreContainer = BeatSaberUI::CreateScrollView(get_transform());
-        leftContainer = BeatSaberUI::CreateFloatingScreen(Vector2(60.0f, 80.f), Vector3(-2.0f, 1.0f, 3.5f), Vector3(0.0f, -35.0f, 0.0f), 0.0f, true, false);
-        rightContainer = BeatSaberUI::CreateFloatingScreen(Vector2(60.0f, 80.f), Vector3(2.0f, 1.0f, 3.5f), Vector3(0.0f, 35.0f, 0.0f), 0.0f, true, false);
+        leftContainer = BeatSaberUI::CreateFloatingScreen(Vector2(60.0f, 80.f), Vector3(-2.5f, 1.0f, 3.5f), Vector3(0.0f, -35.0f, 0.0f), 0.0f, true, false);
+        rightContainer = BeatSaberUI::CreateFloatingScreen(Vector2(60.0f, 80.f), Vector3(2.5f, 1.0f, 3.5f), Vector3(0.0f, 35.0f, 0.0f), 0.0f, true, false);
 
-        // All of the Toggle Switches
+        //Toggle Switches
         getLogger().info("Creating Toggle Switches");
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Text", getQustomTextConfig().ModToggle.GetValue(), Vector2(0.0f, -11.0f), [](bool value) {});
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Solo Text", getQustomTextConfig().SoloToggle.GetValue(), Vector2(0.0f, -18.0f), [](bool value) {});
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Multiplayer Text", getQustomTextConfig().MultiToggle.GetValue(), Vector2(0.0f, -25.0f), [](bool value) {});
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Campaign Text", getQustomTextConfig().CampaignToggle.GetValue(), Vector2(0.0f, -32.0f), [](bool value) {});
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Party Text", getQustomTextConfig().PartyToggle.GetValue(), Vector2(0.0f, -39.0f), [](bool value) {});
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Fail Text", getQustomTextConfig().FailToggle.GetValue(), Vector2(0.0f, -46.0f), [](bool value) {});
+        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Enable Qustom Pass Text", getQustomTextConfig().PassToggle.GetValue(), Vector2(0.0f, -53.0f), [](bool value) {});
+        getLogger().info("Created Toggle Switches!");
 
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Text", getQustomTextConfig().ModToggle.GetValue(), Vector2(0.0f, 0.0f), [](bool value) {});
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Solo Text", getQustomTextConfig().SoloToggle.GetValue(), Vector2(0.0f, -7.0f), [](bool value) {});
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Multiplayer Text", getQustomTextConfig().MultiToggle.GetValue(), Vector2(0.0f, -14.0f), [](bool value) {});
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Campaign Text", getQustomTextConfig().CampaignToggle.GetValue(), Vector2(0.0f, -21.0f), [](bool value) {});
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Party Text", getQustomTextConfig().PartyToggle.GetValue(), Vector2(0.0f, -28.0f), [](bool value) {});
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Fail Text", getQustomTextConfig().FailToggle.GetValue(), Vector2(0.0f, -35.0f), [](bool value) {});
-        BeatSaberUI::CreateToggle(leftContainer->get_transform(), "Disable Qustom Pass Text", getQustomTextConfig().PassToggle.GetValue(), Vector2(0.0f, -42.0f), [](bool value) {});
-
-
-        // Other String Stuff
-        UnityEngine::Transform *parent = centreContainer->get_transform();
-        auto layout = QuestUI::BeatSaberUI::CreateVerticalLayoutGroup(parent);
-        layout->GetComponent<UnityEngine::UI::LayoutElement *>()->set_preferredWidth(50.0f);
-        auto layoutParent = layout->get_transform();
 
         // String Creations
-        AddConfigValueStringSetting(layoutParent, getQustomTextConfig().SoloText);
-        AddConfigValueStringSetting(layoutParent, getQustomTextConfig().MultiText);
-        AddConfigValueStringSetting(layoutParent, getQustomTextConfig().CampaignText);
-        AddConfigValueStringSetting(layoutParent, getQustomTextConfig().PartyText);
-        AddConfigValueStringSetting(layoutParent, getQustomTextConfig().FailText);
-        AddConfigValueStringSetting(layoutParent, getQustomTextConfig().PassText);
+        getLogger().info("Creating Strings");
+        AddConfigValueStringSetting(centreContainer->get_transform(), getQustomTextConfig().SoloText);
+        AddConfigValueStringSetting(centreContainer->get_transform(), getQustomTextConfig().MultiText);
+        AddConfigValueStringSetting(centreContainer->get_transform(), getQustomTextConfig().CampaignText);
+        AddConfigValueStringSetting(centreContainer->get_transform(), getQustomTextConfig().PartyText);
+        AddConfigValueStringSetting(centreContainer->get_transform(), getQustomTextConfig().FailText);
+        AddConfigValueStringSetting(centreContainer->get_transform(), getQustomTextConfig().PassText);
+        getLogger().info("Created Strings!");
+
+
+        // Reset Text Buttons
+        getLogger().info("Creating Reset Buttons");
+        BeatSaberUI::CreateUIButton(rightContainer->get_transform(), "Reset Solo Text", Vector2(0.0f, -11.0f), []() {
+            getQustomTextConfig().SoloText.SetValue("SOLO");
+        });
     }
 
     if (!screensEnabled) {
